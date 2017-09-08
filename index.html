@@ -13,16 +13,5 @@
 		<a-grid scale="2 2" static-body></a-grid>
 		<a-sky color="#000000"></a-sky>
 	</a-scene>
-	<script>
-	var link = "https://scontent-frt3-1.cdninstagram.com/t51.2885-15/e35/21436205_1352767028179966_1455161187904782336_n.jpg";
-	document.querySelector('a-scene').addEventListener('renderend', () => loadMap(room));
-	document.getElementById('camera').addEventListener('collide', (e) => {
-		// console.log(e);
-		if (e.detail.target.el.id == 'start') {
-			loadMap(room);
-		}
-	})
-	document.querySelector('a-box').addEventListener('collide', enterDoor);
-	</script>
 </body>
 </html>
