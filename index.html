@@ -14,49 +14,7 @@
 		<a-sky color="#000000"></a-sky>
 	</a-scene>
 	<script>
-	var room = [
-		[1,1,1,1,1,0,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[-1,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,1],
-		[1,1,1,1,1,1,1,1,1,1]
-	];
-	function loadMap(mapArray) {
-		var scene = document.querySelector('a-scene');
-		var camera_pos = document.getElementById('camera').components.position.data;
-		for (var i = 0; i < mapArray.length; i++) {
-			for (var j = 0; j < mapArray[i].length; j++) {
-				if (mapArray[i][j] > 0) {
-					var newBox = document.createElement('a-box');
-					newBox.setAttribute('position', ((Math.floor(camera_pos.x-5*2-(camera_pos.x%3))) + j*2) + ' ' + (1) + ' ' + (Math.floor(camera_pos.z) + i*2));
-					newBox.setAttribute('color', 'red');
-					newBox.setAttribute('scale', '2 4 2');
-					newBox.setAttribute('static-body', '');
-					scene.appendChild(newBox);
-				} else if (mapArray[i][j] == -1) {
-					var newBox = document.createElement('a-box');
-					newBox.setAttribute('position', ((Math.floor(camera_pos.x-5*2)) + j*2) + ' ' + (1) + ' ' + (Math.floor(camera_pos.z) + i*2));
-					// newBox.setAttribute('visible', 'false');
-					newBox.setAttribute('scale', '2 4 2');
-					newBox.setAttribute('static-body', '');
-					scene.appendChild(newBox);
-					newBox.addEventListener('collide', enterDoor);
-				}
-			}
-		}
-	}
-	function enterDoor(e) {
-						el = e.srcElement;
-						el.setAttribute('visible', 'false');
-						el.setAttribute('body', '');
-						// el.removeAttribute('static-body');
-						loadMap(room);
-	}
+	var link = "https://scontent-frt3-1.cdninstagram.com/t51.2885-15/e35/21436205_1352767028179966_1455161187904782336_n.jpg";
 	document.querySelector('a-scene').addEventListener('renderend', () => loadMap(room));
 	document.getElementById('camera').addEventListener('collide', (e) => {
 		// console.log(e);
