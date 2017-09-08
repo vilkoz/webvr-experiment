@@ -6,13 +6,10 @@
 <body>
 	<!-- <a-scene fog="type: linear; near: 1; far: 15; color: #000"> -->
 	<a-scene physics>
-		<a-assets>
-			<a-asset-item id="zombie" src="zombie-type-1-obj/zombie-type-1.obj"></a-asset>
-		</a-assets>
 		<a-entity id="camera" camera="userHeight: 1.3" kinematic-body universal-controls>
 			<a-cursor></a-cursor>
 		</a-entity>
-		<a-box color="red" width="2" height="5" depth="2" position="0 2 -5" static-body id='start'></a-box>
+		<a-box  width="2" height="4" depth="2" position="0 2 -5" static-body id='start' src="https://scontent-frt3-1.cdninstagram.com/t51.2885-15/e35/21436205_1352767028179966_1455161187904782336_n.jpg"></a-box>
 		<a-grid scale="2 2" static-body></a-grid>
 		<a-sky color="#000000"></a-sky>
 	</a-scene>
