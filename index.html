@@ -1,0 +1,73 @@
+<html>
+<head>
+	<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+	<script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.3.4/dist/aframe-extras.min.js"></script>
+</head>
+<body>
+	<!-- <a-scene fog="type: linear; near: 1; far: 15; color: #000"> -->
+	<a-scene physics>
+		<a-assets>
+			<a-asset-item id="zombie" src="zombie-type-1-obj/zombie-type-1.obj"></a-asset>
+		</a-assets>
+		<a-entity id="camera" camera="userHeight: 1.3" kinematic-body universal-controls>
+			<a-cursor></a-cursor>
+		</a-entity>
+		<a-box color="red" width="2" height="5" depth="2" position="0 2 -5" static-body id='start'></a-box>
+		<a-grid scale="2 2" static-body></a-grid>
+		<a-sky color="#000000"></a-sky>
+	</a-scene>
+	<script>
+	var room = [
+		[1,1,1,1,1,0,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[-1,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1]
+	];
+	function loadMap(mapArray) {
+		var scene = document.querySelector('a-scene');
+		var camera_pos = document.getElementById('camera').components.position.data;
+		for (var i = 0; i < mapArray.length; i++) {
+			for (var j = 0; j < mapArray[i].length; j++) {
+				if (mapArray[i][j] > 0) {
+					var newBox = document.createElement('a-box');
+					newBox.setAttribute('position', ((Math.floor(camera_pos.x-5*2-(camera_pos.x%3))) + j*2) + ' ' + (1) + ' ' + (Math.floor(camera_pos.z) + i*2));
+					newBox.setAttribute('color', 'red');
+					newBox.setAttribute('scale', '2 4 2');
+					newBox.setAttribute('static-body', '');
+					scene.appendChild(newBox);
+				} else if (mapArray[i][j] == -1) {
+					var newBox = document.createElement('a-box');
+					newBox.setAttribute('position', ((Math.floor(camera_pos.x-5*2)) + j*2) + ' ' + (1) + ' ' + (Math.floor(camera_pos.z) + i*2));
+					// newBox.setAttribute('visible', 'false');
+					newBox.setAttribute('scale', '2 4 2');
+					newBox.setAttribute('static-body', '');
+					scene.appendChild(newBox);
+					newBox.addEventListener('collide', enterDoor);
+				}
+			}
+		}
+	}
+	function enterDoor(e) {
+						el = e.srcElement;
+						el.setAttribute('visible', 'false');
+						el.setAttribute('body', '');
+						// el.removeAttribute('static-body');
+						loadMap(room);
+	}
+	document.querySelector('a-scene').addEventListener('renderend', () => loadMap(room));
+	document.getElementById('camera').addEventListener('collide', (e) => {
+		// console.log(e);
+		if (e.detail.target.el.id == 'start') {
+			loadMap(room);
+		}
+	})
+	document.querySelector('a-box').addEventListener('collide', enterDoor);
+	</script>
+</body>
+</html>
